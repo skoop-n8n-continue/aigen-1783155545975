@@ -171,6 +171,8 @@ function createPlayer() {
     scene.add(player);
 }
 
+let dragonTime = 0;
+
 function createDragon() {
     dragon = new THREE.Group();
 
@@ -403,6 +405,18 @@ function animate() {
 
     updatePlayer();
     updateBullets();
+
+    // Animate dragon
+    if (dragon && dragonHealth > 0) {
+        dragonTime += 0.05;
+        dragon.position.y = Math.sin(dragonTime) * 2;
+
+        // Wing animation
+        if (dragon.children.length > 3) {
+            dragon.children[2].rotation.z = -0.2 + Math.sin(dragonTime * 2) * 0.4;
+            dragon.children[3].rotation.z = 0.2 - Math.sin(dragonTime * 2) * 0.4;
+        }
+    }
 
     renderer.render(scene, camera);
 }
