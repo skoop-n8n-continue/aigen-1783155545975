@@ -2,97 +2,116 @@ const fs = require('fs');
 
 let appJs = fs.readFileSync('app.js', 'utf8');
 
-const oldDragon = `function createDragon() {
-    dragon = new THREE.Group();
+// Replace createPlayer function
+const createPlayerReplacement = `function createPlayer() {
+    const color = 0xff66b2; // Pink dress color
 
-    const bodyGeo = new THREE.BoxGeometry(4, 3, 6);
-    const bodyMat = new THREE.MeshLambertMaterial({ color: 0xaa0000 });
+    player = new THREE.Group();
+
+    // Body (Dress)
+    const bodyGeo = new THREE.ConeGeometry(0.7, 1.5, 16);
+    const bodyMat = new THREE.MeshLambertMaterial({ color: color });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
-    body.position.y = 2;
+    body.position.y = 0.75;
+    player.add(body);
 
-    const headGeo = new THREE.BoxGeometry(2, 2, 3);
-    const head = new THREE.Mesh(headGeo, bodyMat);
-    head.position.set(0, 4, 4);
-
-    dragon.add(body);
-    dragon.add(head);
-
-    dragon.position.set(40, 0, -40);
-    scene.add(dragon);
-
-    // Set minimap dragon position based on world coords
-    // World is approx 200x200, minimap is 120x120
-    const mapScale = 120 / 200;
-    minimapDragon.style.left = \`\${(40 * mapScale) + 60}px\`;
-    minimapDragon.style.top = \`\${(-(-40) * mapScale) + 60}px\`;
-}`;
-
-const newDragon = `function createDragon() {
-    dragon = new THREE.Group();
-
-    const bodyMat = new THREE.MeshLambertMaterial({ color: 0x228B22 }); // Green dragon
-    const accentMat = new THREE.MeshLambertMaterial({ color: 0x006400 }); // Dark green spikes
-
-    // Body
-    const bodyGeo = new THREE.BoxGeometry(4, 4, 8);
-    const body = new THREE.Mesh(bodyGeo, bodyMat);
-    body.position.y = 4;
-    
     // Head
-    const headGeo = new THREE.BoxGeometry(3, 3, 4);
-    const head = new THREE.Mesh(headGeo, bodyMat);
-    head.position.set(0, 6, 5);
+    const headGeo = new THREE.SphereGeometry(0.4, 16, 16);
+    const headMat = new THREE.MeshLambertMaterial({ color: 0xffccaa }); // Skin tone
+    const head = new THREE.Mesh(headGeo, headMat);
+    head.position.y = 1.9;
+    player.add(head);
 
-    // Snout
-    const snoutGeo = new THREE.BoxGeometry(2, 1.5, 3);
-    const snout = new THREE.Mesh(snoutGeo, bodyMat);
-    snout.position.set(0, -0.5, 3.5);
-    head.add(snout);
+    // Hair
+    const hairGeo = new THREE.SphereGeometry(0.45, 16, 16, 0, Math.PI * 2, 0, Math.PI / 1.5);
+    const hairMat = new THREE.MeshLambertMaterial({ color: 0x4a2e15 }); // Brown hair
+    const hair = new THREE.Mesh(hairGeo, hairMat);
+    hair.position.y = 1.95;
+    player.add(hair);
 
-    // Eyes
-    const eyeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-    const eyeMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
-    leftEye.position.set(-1, 0.5, 1.5);
-    const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
-    rightEye.position.set(1, 0.5, 1.5);
-    head.add(leftEye);
-    head.add(rightEye);
+    // Arms
+    const armGeo = new THREE.CylinderGeometry(0.15, 0.15, 1, 8);
+    
+    const leftArm = new THREE.Mesh(armGeo, headMat);
+    leftArm.position.set(-0.7, 1.2, 0);
+    leftArm.rotation.z = Math.PI / 6;
+    player.add(leftArm);
 
-    // Wings
-    const wingGeo = new THREE.BoxGeometry(8, 0.5, 6);
-    const leftWing = new THREE.Mesh(wingGeo, accentMat);
-    leftWing.position.set(-5, 5, 0);
-    leftWing.rotation.z = -0.2;
-    const rightWing = new THREE.Mesh(wingGeo, accentMat);
-    rightWing.position.set(5, 5, 0);
-    rightWing.rotation.z = 0.2;
+    const rightArm = new THREE.Mesh(armGeo, headMat);
+    rightArm.position.set(0.7, 1.2, 0);
+    rightArm.rotation.z = -Math.PI / 6;
+    player.add(rightArm);
 
-    // Tail
-    const tailGeo = new THREE.BoxGeometry(1.5, 1.5, 6);
-    const tail = new THREE.Mesh(tailGeo, bodyMat);
-    tail.position.set(0, 3, -6);
-    tail.rotation.x = -0.2;
+    // Legs
+    const legGeo = new THREE.CylinderGeometry(0.15, 0.15, 1, 8);
+    
+    const leftLeg = new THREE.Mesh(legGeo, headMat);
+    leftLeg.position.set(-0.3, 0.5, 0);
+    player.add(leftLeg);
 
-    dragon.add(body);
-    dragon.add(head);
-    dragon.add(leftWing);
-    dragon.add(rightWing);
-    dragon.add(tail);
+    const rightLeg = new THREE.Mesh(legGeo, headMat);
+    rightLeg.position.set(0.3, 0.5, 0);
+    player.add(rightLeg);
 
-    dragon.position.set(40, 0, -40);
-    // Face the house
-    dragon.rotation.y = -Math.PI / 4; 
-    scene.add(dragon);
-
-    // Set minimap dragon position based on world coords
-    // World is approx 200x200, minimap is 120x120
-    const mapScale = 120 / 200;
-    minimapDragon.style.left = \`\${(40 * mapScale) + 60}px\`;
-    minimapDragon.style.top = \`\${(-(-40) * mapScale) + 60}px\`;
+    // Start inside house
+    player.position.set(0, 0, 2);
+    scene.add(player);
 }`;
 
-appJs = appJs.replace(oldDragon, newDragon);
-fs.writeFileSync('app.js', appJs);
+appJs = appJs.replace(/function createPlayer\(\) \{[\s\S]*?scene\.add\(player\);\n\}/, createPlayerReplacement);
 
-console.log('Dragon updated');
+// Update Dragon animation to include following/attacking
+const animateReplacement = `function animate() {
+    if (gameState !== 'playing') return;
+
+    requestAnimationFrame(animate);
+
+    updatePlayer();
+    updateBullets();
+
+    // Animate dragon and make it attack
+    if (dragon && dragonHealth > 0) {
+        dragonTime += 0.05;
+        dragon.position.y = Math.sin(dragonTime) * 2;
+
+        // Wing animation
+        if (dragon.children.length > 3) {
+            dragon.children[2].rotation.z = -0.2 + Math.sin(dragonTime * 2) * 0.4;
+            dragon.children[3].rotation.z = 0.2 - Math.sin(dragonTime * 2) * 0.4;
+        }
+
+        // Dragon AI - Attack player if close enough
+        const distanceToPlayer = dragon.position.distanceTo(player.position);
+        if (distanceToPlayer < 40 && hasExitedHouse) {
+            // Face the player
+            dragon.lookAt(player.position);
+            
+            // Move towards player
+            if (distanceToPlayer > 3) {
+                const speed = 0.1;
+                const dir = new THREE.Vector3().subVectors(player.position, dragon.position).normalize();
+                dragon.position.addScaledVector(dir, speed);
+                
+                // Update minimap dragon position
+                const mapScale = 120 / 200;
+                minimapDragon.style.left = \`\${(dragon.position.x * mapScale) + 60}px\`;
+                minimapDragon.style.top = \`\${(dragon.position.z * mapScale) + 60}px\`;
+            } else {
+                // Attack range! (Game over if caught)
+                endGame();
+            }
+        } else {
+           // Idle rotation when far away
+           dragon.rotation.y = -Math.PI / 4 + Math.sin(dragonTime * 0.5) * 0.5; 
+        }
+    }
+
+    renderer.render(scene, camera);
+}`;
+
+appJs = appJs.replace(/function animate\(\) \{[\s\S]*?renderer\.render\(scene, camera\);\n\}/, animateReplacement);
+
+// Update Dragon colors to original (they were overwritten by mistake in previous fix-dragon.js? Let's make sure it's green)
+appJs = appJs.replace(/0xaa0000/g, '0x228B22');
+
+fs.writeFileSync('app.js', appJs);
