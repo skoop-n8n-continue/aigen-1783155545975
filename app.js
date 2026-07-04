@@ -26,22 +26,29 @@ const gravity = 0.01;
 const moveSpeed = 0.2;
 
 // Initialize Character Selection
-charBoy.addEventListener('click', () => {
+const selectBoy = (e) => {
+    if(e && e.type === 'touchstart') e.preventDefault();
     selectedCharacter = 'boy';
     charBoy.classList.add('selected');
     charGirl.classList.remove('selected');
     startBtn.disabled = false;
-});
+};
+charBoy.addEventListener('click', selectBoy);
+charBoy.addEventListener('touchstart', selectBoy);
 
-charGirl.addEventListener('click', () => {
+const selectGirl = (e) => {
+    if(e && e.type === 'touchstart') e.preventDefault();
     selectedCharacter = 'girl';
     charGirl.classList.add('selected');
     charBoy.classList.remove('selected');
     startBtn.disabled = false;
-});
+};
+charGirl.addEventListener('click', selectGirl);
+charGirl.addEventListener('touchstart', selectGirl);
 
 // Start Game
 startBtn.addEventListener('click', startGame);
+startBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startGame(); });
 
 function startGame() {
     homeScreen.classList.remove('active');
