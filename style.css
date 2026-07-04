@@ -1,0 +1,259 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #10181f;
+    color: white;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0a1128 0%, #1c2541 100%);
+    z-index: 10;
+}
+
+.screen.active {
+    display: flex;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #00b7af;
+    text-shadow: 0 0 10px rgba(0, 183, 175, 0.5);
+    text-align: center;
+}
+
+.character-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.characters {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.character-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid #6a7071;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.character-option.selected {
+    border-color: #00b7af;
+    background-color: rgba(0, 183, 175, 0.2);
+    box-shadow: 0 0 15px rgba(0, 183, 175, 0.4);
+}
+
+.char-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+    background-color: #ccc;
+}
+
+.boy-icon {
+    background-color: #3a86ff;
+}
+
+.girl-icon {
+    background-color: #ff006e;
+}
+
+.btn {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    background-color: #00b7af;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn:disabled {
+    background-color: #6a7071;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+#game-ui {
+    background: transparent;
+    display: none;
+}
+
+#game-ui.active {
+    display: block;
+}
+
+#game-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Minimap */
+#minimap-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 120px;
+    height: 120px;
+    background-color: rgba(16, 24, 31, 0.7);
+    border: 2px solid #00b7af;
+    border-radius: 10px;
+    z-index: 20;
+    transition: opacity 0.5s;
+}
+
+#minimap-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#minimap-player {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #00b7af;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#minimap-dragon {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #ff0000;
+    border-radius: 50%;
+}
+
+/* Controls */
+.controls-container {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.d-pad, .action-buttons {
+    pointer-events: auto;
+}
+
+.d-pad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.d-pad-middle {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.d-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.d-btn:active {
+    background-color: rgba(0, 183, 175, 0.5);
+}
+
+.d-center {
+    width: 50px;
+    height: 50px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.action-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.action-btn:active {
+    background-color: rgba(0, 183, 175, 0.5);
+    transform: scale(0.95);
+}
+
+.action-btn svg {
+    pointer-events: none;
+}
+
+.game-over-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+#game-over-screen p {
+    font-size: 1.5rem;
+    color: #4cc9f0;
+}
