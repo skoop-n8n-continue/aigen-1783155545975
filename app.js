@@ -449,9 +449,19 @@ function animate() {
         dragon.position.y = Math.sin(dragonTime) * 2;
 
         // Wing animation
-        if (dragon.children.length > 3) {
-            dragon.children[2].rotation.z = -0.2 + Math.sin(dragonTime * 2) * 0.4;
-            dragon.children[3].rotation.z = 0.2 - Math.sin(dragonTime * 2) * 0.4;
+        if (dragon.children.length > 5) {
+            // Children[3] and [4] are the wings in the new model
+            dragon.children[3].rotation.y = -Math.PI / 6 + Math.sin(dragonTime * 3) * 0.5;
+            dragon.children[4].rotation.y = Math.PI / 6 - Math.sin(dragonTime * 3) * 0.5;
+            
+            // Tail wag
+            if(dragon.children[5]) {
+                dragon.children[5].rotation.z = Math.sin(dragonTime * 1.5) * 0.2;
+            }
+            // Head bob
+            if(dragon.children[2]) {
+                dragon.children[2].rotation.x = Math.sin(dragonTime) * 0.1;
+            }
         }
 
         // Dragon AI - Attack player if close enough
