@@ -9,7 +9,6 @@ const homeScreen = document.getElementById('home-screen');
 const gameUI = document.getElementById('game-ui');
 const gameOverScreen = document.getElementById('game-over-screen');
 const startBtn = document.getElementById('start-btn');
-const charBoy = document.getElementById('char-boy');
 const charGirl = document.getElementById('char-girl');
 const minimap = document.getElementById('minimap-container');
 const minimapPlayer = document.getElementById('minimap-player');
@@ -26,22 +25,10 @@ const gravity = 0.01;
 const moveSpeed = 0.2;
 
 // Initialize Character Selection
-const selectBoy = (e) => {
-    if(e && e.type === 'touchstart') e.preventDefault();
-    selectedCharacter = 'boy';
-    charBoy.classList.add('selected');
-    charGirl.classList.remove('selected');
-    startGame();
-};
-charBoy.addEventListener('click', selectBoy);
-charBoy.addEventListener('touchstart', selectBoy);
-charBoy.addEventListener('pointerdown', selectBoy);
-
 const selectGirl = (e) => {
     if(e && e.type === 'touchstart') e.preventDefault();
     selectedCharacter = 'girl';
     charGirl.classList.add('selected');
-    charBoy.classList.remove('selected');
     startGame();
 };
 charGirl.addEventListener('click', selectGirl);
@@ -401,7 +388,6 @@ const quitGame = (e) => {
     gameOverScreen.classList.remove('active');
     homeScreen.classList.add('active');
     selectedCharacter = null;
-    charBoy.classList.remove('selected');
     charGirl.classList.remove('selected');
     startBtn.disabled = true;
     document.getElementById('game-canvas').remove();
