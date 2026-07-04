@@ -259,3 +259,4 @@ h1 {
 }.character-option > * {
     pointer-events: none;
 }
+.btn, .d-btn, .action-btn { pointer-events: auto; touch-action: manipulation; }

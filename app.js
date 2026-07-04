@@ -382,7 +382,8 @@ function endGame() {
 }
 
 // Game Over Controls
-document.getElementById('restart-btn').addEventListener('click', () => {
+const restartGame = (e) => {
+    if(e && e.type === 'touchstart') e.preventDefault();
     gameOverScreen.classList.remove('active');
     document.getElementById('game-canvas').remove();
     const newCanvas = document.createElement('canvas');
@@ -390,9 +391,13 @@ document.getElementById('restart-btn').addEventListener('click', () => {
     gameUI.insertBefore(newCanvas, gameUI.firstChild);
     minimapDragon.style.display = 'block';
     startGame();
-});
+};
+document.getElementById('restart-btn').addEventListener('click', restartGame);
+document.getElementById('restart-btn').addEventListener('touchstart', restartGame);
+document.getElementById('restart-btn').addEventListener('pointerdown', restartGame);
 
-document.getElementById('quit-btn').addEventListener('click', () => {
+const quitGame = (e) => {
+    if(e && e.type === 'touchstart') e.preventDefault();
     gameOverScreen.classList.remove('active');
     homeScreen.classList.add('active');
     selectedCharacter = null;
@@ -403,10 +408,17 @@ document.getElementById('quit-btn').addEventListener('click', () => {
     const newCanvas = document.createElement('canvas');
     newCanvas.id = 'game-canvas';
     gameUI.insertBefore(newCanvas, gameUI.firstChild);
-});
+};
+document.getElementById('quit-btn').addEventListener('click', quitGame);
+document.getElementById('quit-btn').addEventListener('touchstart', quitGame);
+document.getElementById('quit-btn').addEventListener('pointerdown', quitGame);
 
-document.getElementById('leave-btn').addEventListener('click', () => {
+const leaveGame = (e) => {
+    if(e && e.type === 'touchstart') e.preventDefault();
     window.close(); // Might not work in all browsers, but fits requirement
     // Fallback UI indication
     document.body.innerHTML = "<h1 style='text-align:center; margin-top:50vh; transform:translateY(-50%);'>Game Closed</h1>";
-});
+};
+document.getElementById('leave-btn').addEventListener('click', leaveGame);
+document.getElementById('leave-btn').addEventListener('touchstart', leaveGame);
+document.getElementById('leave-btn').addEventListener('pointerdown', leaveGame);
