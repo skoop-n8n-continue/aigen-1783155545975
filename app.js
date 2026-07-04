@@ -192,8 +192,8 @@ function createDragon() {
     // Set minimap dragon position based on world coords
     // World is approx 200x200, minimap is 120x120
     const mapScale = 120 / 200;
-    minimapDragon.style.left = \`\${(40 * mapScale) + 60}px\`;
-    minimapDragon.style.top = \`\${(-(-40) * mapScale) + 60}px\`;
+    minimapDragon.style.left = `${(40 * mapScale) + 60}px`;
+    minimapDragon.style.top = `${(-(-40) * mapScale) + 60}px`;
 }
 
 function setupControls() {
@@ -307,8 +307,8 @@ function updatePlayer() {
     // Update minimap
     if (hasExitedHouse) {
         const mapScale = 120 / 200;
-        minimapPlayer.style.left = \`\${(player.position.x * mapScale) + 60}px\`;
-        minimapPlayer.style.top = \`\${(player.position.z * mapScale) + 60}px\`;
+        minimapPlayer.style.left = `${(player.position.x * mapScale) + 60}px`;
+        minimapPlayer.style.top = `${(player.position.z * mapScale) + 60}px`;
     }
 
     // Camera follow
