@@ -31,7 +31,7 @@ const selectBoy = (e) => {
     selectedCharacter = 'boy';
     charBoy.classList.add('selected');
     charGirl.classList.remove('selected');
-    startBtn.disabled = false;
+    startGame();
 };
 charBoy.addEventListener('click', selectBoy);
 charBoy.addEventListener('touchstart', selectBoy);
@@ -42,7 +42,7 @@ const selectGirl = (e) => {
     selectedCharacter = 'girl';
     charGirl.classList.add('selected');
     charBoy.classList.remove('selected');
-    startBtn.disabled = false;
+    startGame();
 };
 charGirl.addEventListener('click', selectGirl);
 charGirl.addEventListener('touchstart', selectGirl);
