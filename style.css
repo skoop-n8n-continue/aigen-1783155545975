@@ -256,4 +256,6 @@ h1 {
 #game-over-screen p {
     font-size: 1.5rem;
     color: #4cc9f0;
+}.character-option > * {
+    pointer-events: none;
 }

@@ -35,6 +35,7 @@ const selectBoy = (e) => {
 };
 charBoy.addEventListener('click', selectBoy);
 charBoy.addEventListener('touchstart', selectBoy);
+charBoy.addEventListener('pointerdown', selectBoy);
 
 const selectGirl = (e) => {
     if(e && e.type === 'touchstart') e.preventDefault();
@@ -45,10 +46,12 @@ const selectGirl = (e) => {
 };
 charGirl.addEventListener('click', selectGirl);
 charGirl.addEventListener('touchstart', selectGirl);
+charGirl.addEventListener('pointerdown', selectGirl);
 
 // Start Game
 startBtn.addEventListener('click', startGame);
 startBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startGame(); });
+startBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); startGame(); });
 
 function startGame() {
     homeScreen.classList.remove('active');
