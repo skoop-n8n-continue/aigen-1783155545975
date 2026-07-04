@@ -363,8 +363,8 @@ function updatePlayer() {
     // Movement relative to player's rotation
     if (keys.forward) player.translateZ(-moveSpeed);
     if (keys.backward) player.translateZ(moveSpeed);
-    if (keys.left) player.rotation.y += 0.05;
-    if (keys.right) player.rotation.y -= 0.05;
+    if (keys.left) player.rotation.y += 0.025;
+    if (keys.right) player.rotation.y -= 0.025;
 
     // Jumping
     if (isJumping) {
